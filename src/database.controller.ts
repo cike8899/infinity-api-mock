@@ -1,14 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { DatabaseService } from './database.service';
 import axios from 'axios';
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
+@Controller('/database')
+export class DatabaseController {
+  constructor(private readonly databaseService: DatabaseService) {}
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    return this.databaseService.getHello();
   }
 
   @Get('/products')
@@ -21,6 +21,6 @@ export class AppController {
     } catch (error) {
       console.log('🚀 ~ AppController ~ getProducts ~ error:', error);
     }
-    return this.appService.getProducts();
+    return this.databaseService.getProducts();
   }
 }
