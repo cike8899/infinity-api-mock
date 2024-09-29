@@ -1,13 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { DatabaseService } from './database.service';
 import axios from 'axios';
+import { CreateDatabaseDto } from './dto/create-database';
 
-@Controller('/database')
+@Controller('')
 export class DatabaseController {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  @Get()
-  getHello(): string {
+  @Get('databases')
+  getDatabases(): string {
     return this.databaseService.getHello();
   }
 
@@ -22,5 +23,21 @@ export class DatabaseController {
       console.log('🚀 ~ AppController ~ getProducts ~ error:', error);
     }
     return this.databaseService.getProducts();
+  }
+
+  @Post('database/:database_name')
+  async createDatabase(
+    @Param() params: any,
+    @Body() createDatabaseDto: CreateDatabaseDto,
+  ): Promise<any> {
+    console.log(
+      '🚀 ~ DatabaseController ~ createDatabaseDto:',
+      params,
+      createDatabaseDto,
+    );
+
+    return {
+      error_code: 0,
+    };
   }
 }
