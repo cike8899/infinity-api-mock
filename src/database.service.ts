@@ -13,4 +13,10 @@ export class DatabaseService {
   createDatabase(database: string) {
     this.databases.push(database);
   }
+  dropDatabase(database: string) {
+    const idx = this.databases.findIndex((x) => x === database);
+    if (idx !== -1) {
+      this.databases.splice(idx, 1);
+    }
+  }
 }

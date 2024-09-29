@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { DatabaseService } from './database.service';
 import axios from 'axios';
-import { CreateDatabaseDto } from './dto/create-database';
+import { CreateDatabaseDto, DropDatabaseDto } from './dto/create-database';
 
 @Controller('/databases')
 export class DatabaseController {
@@ -27,6 +27,24 @@ export class DatabaseController {
     );
 
     this.databaseService.createDatabase(params.database_name);
+
+    return {
+      error_code: 0,
+    };
+  }
+
+  @Delete(':database_name')
+  async dropDatabase(
+    @Param() params: any,
+    @Body() dropDatabaseDto: DropDatabaseDto,
+  ): Promise<any> {
+    console.log(
+      '🚀 ~ DatabaseController ~ createDatabaseDto:',
+      params,
+      dropDatabaseDto,
+    );
+
+    this.databaseService.dropDatabase(params.database_name);
 
     return {
       error_code: 0,
