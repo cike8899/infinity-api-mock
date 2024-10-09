@@ -11,7 +11,7 @@ export class DatabaseController {
   async getDatabases(): Promise<any> {
     return {
       error_code: 0,
-      databases: this.databaseService.getDatabases(),
+      databases: this.databaseService.listDatabase(),
     };
   }
 
@@ -48,6 +48,23 @@ export class DatabaseController {
 
     return {
       error_code: 0,
+    };
+  }
+
+  @Get(':database_name')
+  async showDatabase(@Param() params: any): Promise<any> {
+    const database = this.databaseService.showDatabase(params.database_name);
+
+    if (database) {
+      return {
+        error_code: 0,
+        ...database,
+      };
+    }
+
+    return {
+      error_code: 3021,
+      error_message: "{database_name} doesn't exist.",
     };
   }
 }
